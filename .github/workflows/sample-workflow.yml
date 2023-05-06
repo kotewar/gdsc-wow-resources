@@ -1,0 +1,19 @@
+name: Sample workflow
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    name: Build Test
+    strategy:
+      matrix:
+        runs-on: [ubuntu-latest, windows-latest, macos-latest]
+      fail-fast: false
+    runs-on: ${{ matrix.runs-on }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/github-script@v5
+      with:
+        script: |
+          console.log("process.env['RUNNER_TEMP']="+process.env['RUNNER_TEMP']);
+          console.log("process.cwd()="+process.cwd());
+          console.log("Home directory = "+require('os').homedir());
